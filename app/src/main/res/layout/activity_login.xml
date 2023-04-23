@@ -57,7 +57,7 @@
             android:id="@+id/imageView3"
             android:layout_width="match_parent"
             android:layout_height="140dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="55dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/linearLayout"
             app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName"
@@ -80,12 +80,29 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/marykate"
+            android:layout_marginTop="5dp"
+            android:letterSpacing="0.05"
+            android:text="streamlining your learning flow"
+            android:textAlignment="center"
+            android:textColor="#774C41"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.506"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
         <EditText
             android:id="@+id/editTextUsername"
             android:layout_width="284dp"
             android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="45dp"
             android:background="@drawable/edit_text_border_gray"
             android:backgroundTint="#F1F1F1"
             android:ems="10"
@@ -109,6 +126,7 @@
             android:fontFamily="@font/marykate"
             android:text="Submit"
             android:textSize="20sp"
+            app:cornerRadius="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
