@@ -6,22 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".Pomodoro">
 
-    <com.google.android.material.progressindicator.CircularProgressIndicator
-        android:id="@+id/circularProgressIndicator2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:indeterminate="true"
-        app:indicatorColor="#E05D5D"
-        app:indicatorSize="200dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:trackColor="#F1B2B2"
-        app:trackThickness="10dp"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="214dp" />
-
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="196dp"
@@ -30,7 +14,26 @@
         app:layout_constraintEnd_toEndOf="@+id/circularProgressIndicator2"
         app:layout_constraintStart_toStartOf="@+id/circularProgressIndicator2"
         app:layout_constraintTop_toTopOf="@+id/circularProgressIndicator2"
+        app:layout_constraintVertical_bias="0.526"
         app:srcCompat="@drawable/pomodoro_cat"
+        tools:ignore="MissingConstraints" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/circularProgressIndicator2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        app:indicatorColor="#E05D5D"
+        app:indicatorSize="200dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.369"
+        app:trackColor="#F1B2B2"
+        app:trackThickness="10dp"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -42,7 +45,22 @@
         android:text="25:00"
         android:textColor="@color/black"
         android:textSize="65dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/circularProgressIndicator2" />
+        app:layout_constraintTop_toBottomOf="@+id/circularProgressIndicator2"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="117dp"
+        android:layout_height="115dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.154"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.22"
+        app:srcCompat="@drawable/pomodoro_arrow" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
