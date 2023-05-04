@@ -82,14 +82,16 @@
         style="@style/Widget.Material3.Button"
         android:layout_width="149dp"
         android:layout_height="49dp"
-        android:text="Start"
-        android:textSize="15dp"
-        android:textColor="@color/black"
         android:backgroundTint="#E05D5D"
+        android:fontFamily="sans-serif-medium"
+        android:text="START"
+        android:textColor="@color/black"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:layout_constraintVertical_bias="0.423"
         tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
