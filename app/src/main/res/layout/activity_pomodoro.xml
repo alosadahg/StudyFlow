@@ -32,4 +32,17 @@
         app:layout_constraintTop_toTopOf="@+id/circularProgressIndicator2"
         app:srcCompat="@drawable/pomodoro_cat"
         tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="25:00"
+        android:textColor="@color/black"
+        android:textSize="65dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/circularProgressIndicator2" />
 </androidx.constraintlayout.widget.ConstraintLayout>
