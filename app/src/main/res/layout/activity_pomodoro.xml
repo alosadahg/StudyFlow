@@ -6,18 +6,30 @@
     android:layout_height="match_parent"
     tools:context=".Pomodoro">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/circularProgressIndicator2"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        app:indicatorColor="#E05D5D"
+        app:indicatorSize="200dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints">
+        app:trackColor="#F1B2B2"
+        app:trackThickness="10dp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="214dp" />
 
-        <com.google.android.material.progressindicator.CircularProgressIndicator
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:indeterminate="true"
-            android:layout_gravity="center"/>
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="196dp"
+        android:layout_height="189dp"
+        app:layout_constraintBottom_toBottomOf="@+id/circularProgressIndicator2"
+        app:layout_constraintEnd_toEndOf="@+id/circularProgressIndicator2"
+        app:layout_constraintStart_toStartOf="@+id/circularProgressIndicator2"
+        app:layout_constraintTop_toTopOf="@+id/circularProgressIndicator2"
+        app:srcCompat="@drawable/pomodoro_cat"
+        tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>
