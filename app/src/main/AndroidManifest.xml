@@ -12,14 +12,14 @@
         android:theme="@style/Theme.StudyFlow"
         tools:targetApi="31">
         <activity
-            android:name=".Login"
+            android:name=".Pomodoro"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="false"
             android:theme="@style/Theme.LightTheme" />
         <activity
-            android:name=".Pomodoro"
+            android:name=".Login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
