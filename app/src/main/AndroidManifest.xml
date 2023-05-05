@@ -12,6 +12,9 @@
         android:theme="@style/Theme.StudyFlow"
         tools:targetApi="31">
         <activity
+            android:name=".Pomodoro"
+            android:exported="false" />
+        <activity
             android:name=".Todo"
             android:exported="false" />
         <activity
