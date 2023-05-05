@@ -4,9 +4,9 @@
     <color name="main_color">#627ABB</color>
     <color name="purple_700">#627ABB</color>
     <color name="teal_200">#FF03DAC5</color>
-    <color name="background">#FFFFFFFF</color>
+    <color name="background">#121212</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="text_color">#FF000000</color>
-    <color name="loginUsername">#F1F1F1</color>
+    <color name="text_color">#FFFFFFFF</color>
+    <color name="loginUsername">#DCD9D9</color>
 </resources>
