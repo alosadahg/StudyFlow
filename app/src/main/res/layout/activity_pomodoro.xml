@@ -123,10 +123,12 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/materialButton"
-        style="@style/Widget.Material3.Button"
+        style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="149dp"
         android:layout_height="49dp"
         android:backgroundTint="#E05D5D"
+        app:strokeWidth="3dp"
+        app:strokeColor="@color/black"
         android:fontFamily="sans-serif-medium"
         android:text="START"
         android:textColor="@color/black"
