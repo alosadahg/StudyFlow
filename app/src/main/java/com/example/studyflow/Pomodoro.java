@@ -3,6 +3,7 @@ package com.example.studyflow;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +18,7 @@ public class Pomodoro extends AppCompatActivity {
 
         ImageView imgTheme = findViewById(R.id.imgTheme);
         ImageView catTheme = findViewById(R.id.catTheme);
+        ImageView ic_close = findViewById(R.id.ic_close);
 
         int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         if (nightModeFlags == Configuration.UI_MODE_NIGHT_NO) {
@@ -28,6 +30,14 @@ public class Pomodoro extends AppCompatActivity {
             imgTheme.setBackgroundResource(R.drawable.theme);
             catTheme.setBackgroundResource(R.drawable.pomodoro_cat_night);
         }
+
+        ic_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent main = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(main);
+            }
+        });
         imgTheme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
