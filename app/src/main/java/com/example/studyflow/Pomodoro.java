@@ -21,12 +21,12 @@ public class Pomodoro extends AppCompatActivity {
         int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         if (nightModeFlags == Configuration.UI_MODE_NIGHT_NO) {
             // Night mode is not active
+            imgTheme.setBackgroundResource(R.drawable.theme_light);
             catTheme.setBackgroundResource(R.drawable.pomodoro_cat);
-//            imgTheme.setBackgroundResource(R.drawable.theme_light);
         } else {
             // Night mode is active
+            imgTheme.setBackgroundResource(R.drawable.theme);
             catTheme.setBackgroundResource(R.drawable.pomodoro_cat_night);
-//            imgTheme.setBackgroundResource(R.drawable.theme);
         }
         imgTheme.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -11,4 +11,5 @@
     <color name="loginUsername">#DCD9D9</color>
     <color name="button_border">#F1EEF9</color>
     <color name="pomodoro_color_gray">#F1EEF9</color>
+    <color name="pomodoro_timer">#F1EEF9</color>
 </resources>

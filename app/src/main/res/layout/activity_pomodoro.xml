@@ -60,7 +60,7 @@
         app:layout_constraintStart_toStartOf="@+id/circularProgressIndicator2"
         app:layout_constraintTop_toTopOf="@+id/circularProgressIndicator2"
         app:layout_constraintVertical_bias="0.526"
-        app:srcCompat="@drawable/pomodoro_cat"
+        android:background="@drawable/pomodoro_cat"
         tools:ignore="MissingConstraints" />
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
@@ -88,7 +88,7 @@
         android:layout_marginTop="24dp"
         android:fontFamily="@font/poppins_bold"
         android:text="25:00"
-        android:textColor="@color/text_color"
+        android:textColor="@color/pomodoro_timer"
         android:textSize="65dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
