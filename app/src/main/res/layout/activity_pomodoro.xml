@@ -42,7 +42,9 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:layout_centerVertical="true"
-                android:layout_margin="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/theme_light"
                 android:scaleType="centerInside" />
@@ -50,7 +52,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/catTheme"
         android:layout_width="196dp"
         android:layout_height="189dp"
         app:layout_constraintBottom_toBottomOf="@+id/circularProgressIndicator2"
@@ -86,7 +88,7 @@
         android:layout_marginTop="24dp"
         android:fontFamily="@font/poppins_bold"
         android:text="25:00"
-        android:textColor="@color/black"
+        android:textColor="@color/text_color"
         android:textSize="65dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -96,15 +98,16 @@
 
     <ImageView
         android:id="@+id/imageView5"
-        android:layout_width="117dp"
-        android:layout_height="115dp"
+        android:layout_width="105dp"
+        android:layout_height="108dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.154"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.22"
-        app:srcCompat="@drawable/pomodoro_arrow" />
+        app:srcCompat="@drawable/pomodoro_arrow"
+        app:tint="@color/pomodoro_color_gray" />
 
     <TextView
         android:id="@+id/textView6"
@@ -113,6 +116,7 @@
         android:fontFamily="@font/marykate"
         android:gravity="center"
         android:rotation="-12"
+        android:textColor="@color/pomodoro_color_gray"
         android:text="tap the tomato cat \nto stop"
         app:layout_constraintBottom_toTopOf="@+id/imageView5"
         app:layout_constraintEnd_toEndOf="parent"
@@ -128,10 +132,10 @@
         android:layout_height="49dp"
         android:backgroundTint="#E05D5D"
         app:strokeWidth="3dp"
-        app:strokeColor="@color/black"
+        app:strokeColor="@color/button_border"
         android:fontFamily="sans-serif-medium"
         android:text="START"
-        android:textColor="@color/black"
+        android:textColor="@color/text_color"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -145,6 +149,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/marykate"
+        android:textColor="@color/pomodoro_color_gray"
         android:text="Focus"
         app:layout_constraintBottom_toTopOf="@+id/materialButton"
         app:layout_constraintEnd_toEndOf="parent"
@@ -154,8 +159,9 @@
 
     <ImageView
         android:id="@+id/imageView6"
-        android:layout_width="18dp"
+        android:layout_width="16dp"
         android:layout_height="17dp"
+        android:layout_marginTop="2dp"
         android:rotation="90"
         app:layout_constraintBottom_toTopOf="@+id/materialButton"
         app:layout_constraintEnd_toStartOf="@+id/textView3"
@@ -163,6 +169,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/baseline_compare_arrows_24" />
+        app:srcCompat="@drawable/baseline_compare_arrows_24"
+        app:tint="@color/arrow" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

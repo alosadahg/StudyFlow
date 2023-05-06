@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="text_color">#FFFFFFFF</color>
     <color name="loginUsername">#DCD9D9</color>
+    <color name="button_border">#F1EEF9</color>
+    <color name="pomodoro_color_gray">#F1EEF9</color>
 </resources>
