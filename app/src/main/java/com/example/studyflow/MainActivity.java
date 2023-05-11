@@ -71,7 +71,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch(view.getId()) {
             case R.id.crdPomodoro:
-                Toast.makeText(MainActivity.this,"Pomodoro timer is clicked!",Toast.LENGTH_SHORT).show();
+                Intent pomodoroTimer = new Intent(this, Pomodoro.class);
+                startActivity(pomodoroTimer);
                 break;
             case R.id.crdTodo:
                 Toast.makeText(MainActivity.this,"To-do list is clicked!",Toast.LENGTH_SHORT).show();
