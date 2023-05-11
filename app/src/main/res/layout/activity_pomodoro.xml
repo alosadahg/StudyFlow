@@ -5,9 +5,54 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Pomodoro">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#00FFFFFF"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:titleTextColor="#000000"
+        tools:ignore="MissingConstraints">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="16dp">
+
+            <ImageView
+                android:id="@+id/ic_close"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/ic_close" />
+
+            <ImageView
+                android:id="@+id/imgTheme"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/theme_light"
+                android:scaleType="centerInside" />
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/catTheme"
         android:layout_width="196dp"
         android:layout_height="189dp"
         app:layout_constraintBottom_toBottomOf="@+id/circularProgressIndicator2"
@@ -15,7 +60,7 @@
         app:layout_constraintStart_toStartOf="@+id/circularProgressIndicator2"
         app:layout_constraintTop_toTopOf="@+id/circularProgressIndicator2"
         app:layout_constraintVertical_bias="0.526"
-        app:srcCompat="@drawable/pomodoro_cat"
+        android:background="@drawable/pomodoro_cat"
         tools:ignore="MissingConstraints" />
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
@@ -43,7 +88,7 @@
         android:layout_marginTop="24dp"
         android:fontFamily="@font/poppins_bold"
         android:text="25:00"
-        android:textColor="@color/black"
+        android:textColor="@color/pomodoro_timer"
         android:textSize="65dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -53,15 +98,16 @@
 
     <ImageView
         android:id="@+id/imageView5"
-        android:layout_width="117dp"
-        android:layout_height="115dp"
+        android:layout_width="105dp"
+        android:layout_height="108dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.154"
+        app:layout_constraintHorizontal_bias="0.114"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.22"
-        app:srcCompat="@drawable/pomodoro_arrow" />
+        app:layout_constraintVertical_bias="0.211"
+        app:srcCompat="@drawable/pomodoro_arrow"
+        app:tint="@color/pomodoro_color_gray" />
 
     <TextView
         android:id="@+id/textView6"
@@ -70,6 +116,7 @@
         android:fontFamily="@font/marykate"
         android:gravity="center"
         android:rotation="-12"
+        android:textColor="@color/pomodoro_color_gray"
         android:text="tap the tomato cat \nto stop"
         app:layout_constraintBottom_toTopOf="@+id/imageView5"
         app:layout_constraintEnd_toEndOf="parent"
@@ -80,13 +127,15 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/materialButton"
-        style="@style/Widget.Material3.Button"
+        style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="149dp"
         android:layout_height="49dp"
         android:backgroundTint="#E05D5D"
+        app:strokeWidth="3dp"
+        app:strokeColor="@color/button_border"
         android:fontFamily="sans-serif-medium"
         android:text="START"
-        android:textColor="@color/black"
+        android:textColor="@color/text_color"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -100,6 +149,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/marykate"
+        android:textColor="@color/pomodoro_color_gray"
         android:text="Focus"
         app:layout_constraintBottom_toTopOf="@+id/materialButton"
         app:layout_constraintEnd_toEndOf="parent"
@@ -109,8 +159,9 @@
 
     <ImageView
         android:id="@+id/imageView6"
-        android:layout_width="18dp"
+        android:layout_width="16dp"
         android:layout_height="17dp"
+        android:layout_marginTop="2dp"
         android:rotation="90"
         app:layout_constraintBottom_toTopOf="@+id/materialButton"
         app:layout_constraintEnd_toStartOf="@+id/textView3"
@@ -118,6 +169,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/baseline_compare_arrows_24" />
+        app:srcCompat="@drawable/baseline_compare_arrows_24"
+        app:tint="@color/pomodoro_color_gray" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
