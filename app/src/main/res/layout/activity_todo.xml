@@ -1,114 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="match_parent"
+    tools:context=".Todo">
 
     <include
-        android:id="@+id/layout_header"
-        layout="@layout/activity_header"/>
-    <TableRow
-        android:layout_width="match_parent"
+        layout="@layout/activity_header"
+        android:id="@+id/header"/>
+
+    <TextView
+        android:id="@+id/txtTodo"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical">
+        android:fontFamily="@font/poppins_bold"
+        android:textColor="@color/text_color"
+        android:text="To-do list"
+        android:textSize="20sp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_below="@+id/header"/>
 
-        <TextView
-            android:id="@+id/txtTodo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="To-do List"
-            android:textColor="@color/text_color"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:fontFamily="@font/poppins_regular"
-            android:textAlignment="center"/>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1"/>
-
-        <Button
-            android:id="@+id/add_task_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            android:text="Add Task"
-            android:layout_gravity="end"/>
-    </TableRow>
-
-
-    <ScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="763dp">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/txtTodo"
+        android:layout_marginHorizontal="20dp"
+        android:scrollbars="vertical" />
 
-        <LinearLayout
-            android:id="@+id/checklist_items_layout"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_margin="20dp"
-            android:layout_weight="1"
-            android:background="@drawable/todo_bg"
-            android:orientation="vertical">
-
-            <!-- Example checklist item -->
-
-            <CheckBox
-                android:id="@+id/checklist_item"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:text="Example Task" />
-
-            <!-- Additional checklist items will be added dynamically -->
-
-        </LinearLayout>
-
-    </ScrollView>
-<!--    <TextView-->
-<!--        android:id="@+id/txtTodo"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="To-do List"-->
-<!--        android:textColor="@color/text_color"-->
-<!--        android:textSize="20sp"-->
-<!--        android:textStyle="bold"-->
-<!--        android:layout_below="@+id/layout_header"-->
-<!--        android:layout_marginLeft="20dp"-->
-<!--        android:layout_marginRight="20dp"-->
-<!--        android:fontFamily="@font/poppins_regular" />-->
-
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:id="@+id/tasksRecyclerView"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@id/txtTodo"-->
-<!--        android:layout_marginStart="20dp"-->
-<!--        android:layout_marginTop="20dp"-->
-<!--        android:layout_marginEnd="20dp"-->
-<!--        android:layout_marginBottom="20dp"-->
-<!--        android:background="#BFCCF1"-->
-<!--        android:nestedScrollingEnabled="true"-->
-<!--        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />-->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnAddTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="30dp"
+        android:scaleType="center"
+        app:maxImageSize="40dp"
+        android:contentDescription="Add Notes"
+        android:backgroundTint="#627ABD"
+        android:src="@drawable/ic_baseline_add_24"
+        app:tint="@android:color/white"/>
 
 
-<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--        android:id="@+id/fab"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_alignParentEnd="true"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:layout_marginStart="32dp"-->
-<!--        android:layout_marginTop="32dp"-->
-<!--        android:layout_marginEnd="30dp"-->
-<!--        android:layout_marginBottom="30dp"-->
-<!--        android:backgroundTint="@color/main_color"-->
-<!--        android:contentDescription="add"-->
-<!--        android:src="@drawable/ic_baseline_add_24" />-->
-
-</LinearLayout>
+</RelativeLayout>
