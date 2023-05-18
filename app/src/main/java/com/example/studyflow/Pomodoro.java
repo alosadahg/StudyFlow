@@ -12,6 +12,12 @@ import android.widget.ImageView;
 public class Pomodoro extends AppCompatActivity {
 
     @Override
+    public void onBackPressed() {
+        Intent main = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(main);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pomodoro);
@@ -51,5 +57,7 @@ public class Pomodoro extends AppCompatActivity {
                 }
             }
         });
+
+
     }
 }
