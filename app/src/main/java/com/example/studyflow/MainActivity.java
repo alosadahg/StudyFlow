@@ -79,6 +79,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.crdTodo:
                 Toast.makeText(MainActivity.this,"To-do list is clicked!",Toast.LENGTH_SHORT).show();
+                Intent todo = new Intent(getApplicationContext(), Todo.class);
+                startActivity(todo);
                 break;
             case R.id.crdQuizzes:
                 Toast.makeText(MainActivity.this,"Quizzes is clicked!",Toast.LENGTH_SHORT).show();
