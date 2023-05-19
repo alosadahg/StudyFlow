@@ -1,18 +1,23 @@
 package com.example.studyflow.Model;
 
 public class UserModel {
-    private String username;
-    private String password;
+    String username;
+    String password;
 
     public UserModel() {
 
+    }
+
+    public UserModel(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public void setUserName(String name) {
+    public void setUsername(String name) {
         this.username = name;
     }
 
