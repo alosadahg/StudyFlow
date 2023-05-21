@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -29,9 +30,8 @@ public class Todo extends AppCompatActivity implements OnDialogCloseListner {
     private FloatingActionButton fab;
     private TaskDBHelper myDB;
     private List<ToDoModel> mList;
+    private List<ToDoModel> displayList;
     private ToDoAdapter adapter;
-    SharedPreferences sharedPreferences = getSharedPreferences("current_user", Context.MODE_PRIVATE);
-    String savedUsername = sharedPreferences.getString("username", "");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,13 +43,21 @@ public class Todo extends AppCompatActivity implements OnDialogCloseListner {
         fab = findViewById(R.id.btnAddTask);
         myDB = new TaskDBHelper(Todo.this);
         mList = new ArrayList<>();
+        displayList = new ArrayList<>();
         adapter = new ToDoAdapter(myDB, Todo.this);
 
         mRecyclerview.setHasFixedSize(true);
         mRecyclerview.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerview.setAdapter(adapter);
+        Intent intent = getIntent();
+        String name = intent.getStringExtra("name");
 
-        mList = myDB.getAllTasks(savedUsername);
+        mList = myDB.getAllTasks();
+//        for(ToDoModel task: mList) {
+//            if(task.getUsername().equals(savedUsername)) {
+//                displayList.add(task);
+//            }
+//        }
         Collections.reverse(mList);
         adapter.setTasks(mList);
 
@@ -89,7 +97,14 @@ public class Todo extends AppCompatActivity implements OnDialogCloseListner {
 
         @Override
         public void onDialogClose(DialogInterface dialogInterface) {
-            mList = myDB.getAllTasks(savedUsername);
+            Intent intent = getIntent();
+            String name = intent.getStringExtra("name");
+            mList = myDB.getAllTasks();
+//            for(ToDoModel task: mList) {
+//                if(task.getUsername().equals(savedUsername)) {
+//                    displayList.add(task);
+//                }
+//            }
             Collections.reverse(mList);
             adapter.setTasks(mList);
             adapter.notifyDataSetChanged();

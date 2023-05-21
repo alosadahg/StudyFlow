@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/boorsok"
-        android:letterSpacing="0.15"
+        android:letterSpacing="0.05"
         android:text="STUDYFLOW"
         android:layout_marginTop="-70dp"
         android:textAlignment="center"
