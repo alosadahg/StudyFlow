@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "732276648339",
+    "firebase_url": "https://studyflow-eb56b-default-rtdb.firebaseio.com",
+    "project_id": "studyflow-eb56b",
+    "storage_bucket": "studyflow-eb56b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:732276648339:android:66f5f7b7e4fccb0d40e066",
+        "android_client_info": {
+          "package_name": "com.example.studyflow"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "732276648339-2nfkrbpqh03r5uh02nefs8jr0ssb0l9e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXZYe8CgiN5zXWPbvWgqwzjDU7sIHsBBg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "732276648339-2nfkrbpqh03r5uh02nefs8jr0ssb0l9e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

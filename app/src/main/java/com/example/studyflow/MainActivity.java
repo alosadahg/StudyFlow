@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.crdNotes:
                 Toast.makeText(MainActivity.this,"Notes is clicked!",Toast.LENGTH_SHORT).show();
-                Intent notes = new Intent(getApplicationContext(), Notes.class);
+                Intent notes = new Intent(getApplicationContext(), Note.class);
                 startActivity(notes);
                 break;
             case R.id.crdStudySet:

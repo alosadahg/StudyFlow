@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 public class Login extends AppCompatActivity {
     FirebaseFirestore firebase;
@@ -83,10 +84,15 @@ public class Login extends AppCompatActivity {
                     .get()
                     .addOnSuccessListener(queryDocumentSnapshots -> {
                         if (!queryDocumentSnapshots.isEmpty()) {
+                            QueryDocumentSnapshot documentSnapshot = (QueryDocumentSnapshot) queryDocumentSnapshots.getDocuments().get(0);
+                            String documentId = documentSnapshot.getId();
+
+
                             SharedPreferences sharedPreferences = getSharedPreferences("current_user", Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putString("username", username);
                             editor.putString("password", password);
+                            editor.putString("userDocumentID", documentId);
                             editor.apply();
                             Toast.makeText(Login.this, "Welcome " + username + "!", Toast.LENGTH_SHORT).show();
                             Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
