@@ -1,9 +1,14 @@
 package com.example.studyflow;
 
+
 import android.app.Activity;
 import android.content.Context;
+
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -11,115 +16,108 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.example.studyflow.Database.TaskDBHelper;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.example.studyflow.Model.ToDoModel;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+
 
 public class AddNewTask extends BottomSheetDialogFragment {
     public static final String TAG = "AddNewTask";
 
-    private EditText txtNewTask;
-    private Button btnSave;
-    private FirebaseFirestore firestore;
-    Context context;
+    //widgets
+    private EditText mEditText;
+    private Button mSaveButton;
 
-    public static AddNewTask newInstance() {
+    private TaskDBHelper myDb;
+
+    public static AddNewTask newInstance(){
         return new AddNewTask();
     }
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.add_new_task, container, false);
+        View v = inflater.inflate(R.layout.add_new_task , container , false);
+        return v;
     }
 
-//    @Override
-//    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-//        super.onViewCreated(view, savedInstanceState);
-//
-//        txtNewTask = (EditText) view.findViewById(R.id.txtNewTask);
-//        btnSave = (Button) view.findViewById(R.id.btnSave);
-//
-//        firestore = FirebaseFirestore.getInstance();
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-//        txtNewTask.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//                if(charSequence.toString().equals("")) {
-//                    btnSave.setEnabled(false);
-//                } else {
-//                    btnSave.setEnabled(true);
-//                    btnSave.setBackgroundColor(getResources().getColor(R.color.main_color));
-//                }
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable editable) {
-//
-//            }
-//        });
+        mEditText = view.findViewById(R.id.txtNewTask);
+        mSaveButton = view.findViewById(R.id.btnSave);
 
-//        btnSave.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String task = txtNewTask.getText().toString();
-//
-//                if(task.isEmpty()) {
-//                    Toast.makeText(context, "Cannot add empty task", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    Map<String, Object> taskMap = new HashMap<>();
-//                    taskMap.put("task", task);
-//                    taskMap.put("status", 0);
-//
-//                    firestore.collection("task").add(taskMap).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<DocumentReference> task) {
-//                            if(task.isSuccessful()) {
-//                                Toast.makeText(context, "Task Saved", Toast.LENGTH_SHORT).show();
-//                            } else {
-//                                Toast.makeText(context, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//                    }).addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception e) {
-//                            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
-//                }
-//                dismiss();
-//            }
-//        });
-    //}
+        myDb = new TaskDBHelper(getActivity());
 
-//    @Override
-//    public void onAttach(@NonNull Context context) {
-//        super.onAttach(context);
-//        this.context = context;
-//    }
-//
-//    @Override
-//    public void onDismiss(@NonNull DialogInterface dialog) {
-//        super.onDismiss(dialog);
-//        Activity activity = getActivity();
-//        if(activity instanceof OnDialogCloseListner) {
-//
-//        }
-//    }
+        boolean isUpdate = false;
+
+        final Bundle bundle = getArguments();
+        if (bundle != null){
+            isUpdate = true;
+            String task = bundle.getString("task");
+            mEditText.setText(task);
+
+            if (task.length() > 0 ){
+                mSaveButton.setEnabled(false);
+            }
+
+        }
+        mEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().equals("")){
+                    mSaveButton.setEnabled(false);
+                    mSaveButton.setBackgroundColor(Color.GRAY);
+                }else{
+                    mSaveButton.setEnabled(true);
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        final boolean finalIsUpdate = isUpdate;
+        mSaveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String text = mEditText.getText().toString();
+                SharedPreferences sharedPreferences = getContext().getSharedPreferences("current_user", Context.MODE_PRIVATE);
+                String savedUsername = sharedPreferences.getString("username","");
+
+                if (finalIsUpdate){
+                    myDb.updateTask(bundle.getInt("id") , text);
+                }else{
+                    ToDoModel item = new ToDoModel();
+                    item.setTask(text);
+                    item.setStatus(0);
+                    item.setUsername(savedUsername);
+                    myDb.insertTask(item);
+                }
+                dismiss();
+
+            }
+        });
+    }
+
+    @Override
+    public void onDismiss(@NonNull DialogInterface dialog) {
+        super.onDismiss(dialog);
+        Activity activity = getActivity();
+        if (activity instanceof OnDialogCloseListner){
+            ((OnDialogCloseListner)activity).onDialogClose(dialog);
+        }
+    }
 }

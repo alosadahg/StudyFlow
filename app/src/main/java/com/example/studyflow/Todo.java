@@ -2,45 +2,56 @@ package com.example.studyflow;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.example.studyflow.Adapter.ToDoAdapter;
+import com.example.studyflow.Database.TaskDBHelper;
 import com.example.studyflow.Model.ToDoModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class Todo extends AppCompatActivity {
+public class Todo extends AppCompatActivity implements OnDialogCloseListner {
 
-    private RecyclerView recyclerView;
-    private ToDoAdapter tasksAdapter;
-
-    private FirebaseFirestore firestore;
-    private List<ToDoModel> taskList;
-    private FloatingActionButton btnAddTask;
+    private RecyclerView mRecyclerview;
+    private FloatingActionButton fab;
+    private TaskDBHelper myDB;
+    private List<ToDoModel> mList;
+    private ToDoAdapter adapter;
+    SharedPreferences sharedPreferences = getSharedPreferences("current_user", Context.MODE_PRIVATE);
+    String savedUsername = sharedPreferences.getString("username", "");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todo);
 
-        taskList = new ArrayList<>();
-
         ImageView imgTheme = findViewById(R.id.imgTheme);
-        recyclerView = findViewById(R.id.recyclerView);
-        btnAddTask = findViewById(R.id.btnAddTask);
-        firestore = FirebaseFirestore.getInstance();
+        mRecyclerview = findViewById(R.id.recyclerView);
+        fab = findViewById(R.id.btnAddTask);
+        myDB = new TaskDBHelper(Todo.this);
+        mList = new ArrayList<>();
+        adapter = new ToDoAdapter(myDB, Todo.this);
 
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerview.setHasFixedSize(true);
+        mRecyclerview.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerview.setAdapter(adapter);
+
+        mList = myDB.getAllTasks(savedUsername);
+        Collections.reverse(mList);
+        adapter.setTasks(mList);
 
         int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         if (nightModeFlags == Configuration.UI_MODE_NIGHT_NO) {
@@ -50,25 +61,6 @@ public class Todo extends AppCompatActivity {
             // Night mode is active
             imgTheme.setBackgroundResource(R.drawable.theme);
         }
-
-        tasksAdapter = new ToDoAdapter(this, taskList);
-        recyclerView.setAdapter(tasksAdapter);
-
-//        ToDoModel task = new ToDoModel();
-//        task.setTask("Test task");
-//        task.setStatus(0);
-//        task.setId(1);
-//
-//        taskList.add(task);
-//
-//        ToDoModel task1 = new ToDoModel();
-//        task1.setTask("Sample task");
-//        task1.setStatus(1);
-//        task1.setId(2);
-//
-//        taskList.add(task1);
-//
-//        tasksAdapter.setTask(taskList);
 
         imgTheme.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,11 +76,22 @@ public class Todo extends AppCompatActivity {
             }
         });
 
-        btnAddTask.setOnClickListener(new View.OnClickListener() {
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                AddNewTask.newInstance().show(getSupportFragmentManager(),AddNewTask.TAG);
+            public void onClick(View v) {
+                AddNewTask.newInstance().show(getSupportFragmentManager(), AddNewTask.TAG);
             }
         });
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new TodoViewTouchHelper(adapter));
+        itemTouchHelper.attachToRecyclerView(mRecyclerview);
     }
+
+
+        @Override
+        public void onDialogClose(DialogInterface dialogInterface) {
+            mList = myDB.getAllTasks(savedUsername);
+            Collections.reverse(mList);
+            adapter.setTasks(mList);
+            adapter.notifyDataSetChanged();
+        }
 }

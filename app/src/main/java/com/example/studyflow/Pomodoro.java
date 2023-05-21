@@ -13,6 +13,7 @@ public class Pomodoro extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         Intent main = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(main);
     }

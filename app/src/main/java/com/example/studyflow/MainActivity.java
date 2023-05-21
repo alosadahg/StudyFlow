@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.cardview.widget.CardView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -21,10 +23,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         Intent intent = getIntent();
-        String username = intent.getStringExtra("name");
+        SharedPreferences sharedPreferences = getSharedPreferences("current_user", Context.MODE_PRIVATE);
+        String savedUsername = sharedPreferences.getString("username","");
         TextView msgWelcome = (TextView) findViewById(R.id.msgWelcome);
 
-        msgWelcome.setText("Welcome " + username + "!");
+        msgWelcome.setText("Welcome " + savedUsername + "!");
 
         CardView cardPomodoro = findViewById(R.id.crdPomodoro);
         CardView cardTodo = findViewById(R.id.crdTodo);

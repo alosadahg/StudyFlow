@@ -2,7 +2,9 @@ package com.example.studyflow;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,6 +33,7 @@ public class Login extends AppCompatActivity {
         FirebaseApp.initializeApp(this);
         firebase = FirebaseFirestore.getInstance();
 
+
         btnSubmit.setOnClickListener(view -> {
             String name = txtName.getText().toString();
             String password = txtPassword.getText().toString();
@@ -44,26 +47,55 @@ public class Login extends AppCompatActivity {
         });
 
         btnSignUp.setOnClickListener(view -> {
+            SharedPreferences sharedPreferences = getSharedPreferences("offline_access", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.clear();
+            editor.apply();
             Intent intentSignUp = new Intent(getApplicationContext(), SignUp.class);
             startActivity(intentSignUp);
         });
     }
 
     private void login(String username, String password) {
-        CollectionReference users = firebase.collection("users");
+        if(NetworkCheck.isNetworkAvailable(getApplicationContext())==false) {
+            SharedPreferences sharedPreferences = getSharedPreferences("offline_access", Context.MODE_PRIVATE);
+            String savedUsername = sharedPreferences.getString("username","");
+            String savedPassword = sharedPreferences.getString("password","");
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            if(username.equals(savedUsername) && password.equals(savedPassword)) {
+                SharedPreferences current_user = getSharedPreferences("current_user", Context.MODE_PRIVATE);
+                SharedPreferences.Editor current_editor = current_user.edit();
+                current_editor.putString("username", username);
+                current_editor.putString("password", password);
+                current_editor.apply();
+                Toast.makeText(Login.this, "Welcome " + username + "!", Toast.LENGTH_SHORT).show();
+                Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
+                mainIntent.putExtra("name", username);
+                startActivity(mainIntent);
+            } else {
+                Toast.makeText(Login.this, "Incorrect username or password", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            CollectionReference users = firebase.collection("users");
 
-        users.whereEqualTo("username", username)
-                .whereEqualTo("password", password)
-                .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    if (!queryDocumentSnapshots.isEmpty()) {
-                        Toast.makeText(Login.this, "Welcome " + username + "!", Toast.LENGTH_SHORT).show();
-                        Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
-                        mainIntent.putExtra("name", username);
-                        startActivity(mainIntent);
-                    } else {
-                        Toast.makeText(Login.this, "Incorrect username or password", Toast.LENGTH_SHORT).show();
-                    }
-                });
+            users.whereEqualTo("username", username)
+                    .whereEqualTo("password", password)
+                    .get()
+                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                        if (!queryDocumentSnapshots.isEmpty()) {
+                            SharedPreferences sharedPreferences = getSharedPreferences("current_user", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("username", username);
+                            editor.putString("password", password);
+                            editor.apply();
+                            Toast.makeText(Login.this, "Welcome " + username + "!", Toast.LENGTH_SHORT).show();
+                            Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
+                            mainIntent.putExtra("name", username);
+                            startActivity(mainIntent);
+                        } else {
+                            Toast.makeText(Login.this, "Incorrect username or password", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
     }
 }
