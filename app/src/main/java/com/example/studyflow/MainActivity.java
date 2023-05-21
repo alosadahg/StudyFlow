@@ -72,15 +72,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch(view.getId()) {
             case R.id.crdPomodoro:
-                Intent pomodoroTimer = new Intent(this, Pomodoro.class);
-                startActivity(pomodoroTimer);
                 Toast.makeText(MainActivity.this,"Pomodoro timer is clicked!",Toast.LENGTH_SHORT).show();
                 Intent pomodoro = new Intent(getApplicationContext(), Pomodoro.class);
                 startActivity(pomodoro);
                 break;
             case R.id.crdTodo:
                 Toast.makeText(MainActivity.this,"To-do list is clicked!",Toast.LENGTH_SHORT).show();
+                SharedPreferences sharedPreferences = getSharedPreferences("current_user", Context.MODE_PRIVATE);
+                String savedUsername = sharedPreferences.getString("username","");
                 Intent todo = new Intent(getApplicationContext(), Todo.class);
+                todo.putExtra("name",savedUsername);
                 startActivity(todo);
                 break;
             case R.id.crdQuizzes:
