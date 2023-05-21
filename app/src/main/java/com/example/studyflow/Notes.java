@@ -2,23 +2,23 @@ package com.example.studyflow;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.cardview.widget.CardView;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
-import android.widget.TextView;
-import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+public class Notes extends AppCompatActivity {
+    FloatingActionButton createNotes;
+
     private ImageView imgMenu;
     private PopupMenu menu;
     private boolean isMenuOpen;
@@ -26,28 +26,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_notes);
 
-        Intent intent = getIntent();
-        SharedPreferences sharedPreferences = getSharedPreferences("current_user", Context.MODE_PRIVATE);
-        String savedUsername = sharedPreferences.getString("username","");
-        TextView msgWelcome = (TextView) findViewById(R.id.msgWelcome);
-
-        msgWelcome.setText("Welcome " + savedUsername + "!");
-
-        CardView cardPomodoro = findViewById(R.id.crdPomodoro);
-        CardView cardTodo = findViewById(R.id.crdTodo);
-        CardView cardQuizzes = findViewById(R.id.crdQuizzes);
-        CardView cardFlashcards = findViewById(R.id.crdFlashcards);
-        CardView cardNotes = findViewById(R.id.crdNotes);
-        CardView cardStudySet = findViewById(R.id.crdStudySet);
-
-        cardPomodoro.setOnClickListener(this);
-        cardTodo.setOnClickListener(this);
-        cardQuizzes.setOnClickListener(this);
-        cardFlashcards.setOnClickListener(this);
-        cardNotes.setOnClickListener(this);
-        cardStudySet.setOnClickListener(this);
+        createNotes = findViewById(R.id.createNotes);
 
         imgMenu = findViewById(R.id.imgMenu);
         ImageView imgTheme = findViewById(R.id.imgTheme);
@@ -79,45 +60,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View view) {
                 if(!isMenuOpen)
-                showPopupMenu();
+                    showPopupMenu();
             }
         });
 
-    }
+        createNotes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-    @Override
-    public void onClick(View view) {
-        switch(view.getId()) {
-            case R.id.crdPomodoro:
-//                Toast.makeText(MainActivity.this,"Pomodoro timer is clicked!",Toast.LENGTH_SHORT).show();
-                Intent pomodoro = new Intent(getApplicationContext(), Pomodoro.class);
-                startActivity(pomodoro);
-                break;
-            case R.id.crdTodo:
-//                Toast.makeText(MainActivity.this,"To-do list is clicked!",Toast.LENGTH_SHORT).show();
-                SharedPreferences sharedPreferences = getSharedPreferences("current_user", Context.MODE_PRIVATE);
-                String savedUsername = sharedPreferences.getString("username","");
-                Intent todo = new Intent(getApplicationContext(), Todo.class);
-                todo.putExtra("name",savedUsername);
-                startActivity(todo);
-                break;
-            case R.id.crdQuizzes:
-                Toast.makeText(MainActivity.this,"Quizzes is clicked!",Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.crdFlashcards:
-                Toast.makeText(MainActivity.this,"Flashcards is clicked!",Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.crdNotes:
-                Toast.makeText(MainActivity.this,"Notes is clicked!",Toast.LENGTH_SHORT).show();
-                Intent notes = new Intent(getApplicationContext(), Notes.class);
-//                Toast.makeText(MainActivity.this,"Notes is clicked!",Toast.LENGTH_SHORT).show();
-
-                startActivity(notes);
-                break;
-            case R.id.crdStudySet:
-                Toast.makeText(MainActivity.this,"Study sets is clicked!",Toast.LENGTH_SHORT).show();
-                break;
-        }
+            }
+        });
     }
 
     @Override

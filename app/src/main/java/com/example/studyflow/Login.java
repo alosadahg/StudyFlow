@@ -104,4 +104,10 @@ public class Login extends AppCompatActivity {
                     });
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent splash = new Intent(getApplicationContext(),SplashScreen.class);
+        startActivity(splash);
+    }
 }

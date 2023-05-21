@@ -12,8 +12,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 
 import com.example.studyflow.Adapter.ToDoAdapter;
 import com.example.studyflow.Database.TaskDBHelper;
@@ -32,6 +35,10 @@ public class Todo extends AppCompatActivity implements OnDialogCloseListner {
     private List<ToDoModel> mList;
     private List<ToDoModel> displayList;
     private ToDoAdapter adapter;
+
+    private ImageView imgMenu;
+    private PopupMenu menu;
+    private boolean isMenuOpen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +59,8 @@ public class Todo extends AppCompatActivity implements OnDialogCloseListner {
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
 
+        SharedPreferences sharedPreferences = getSharedPreferences("current_user", Context.MODE_PRIVATE);
+        String savedUsername = sharedPreferences.getString("username","");
         mList = myDB.getAllTasks();
 //        for(ToDoModel task: mList) {
 //            if(task.getUsername().equals(savedUsername)) {
@@ -61,6 +70,9 @@ public class Todo extends AppCompatActivity implements OnDialogCloseListner {
         Collections.reverse(mList);
         adapter.setTasks(mList);
 
+        imgMenu = findViewById(R.id.imgMenu);
+        isMenuOpen = false;
+
         int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         if (nightModeFlags == Configuration.UI_MODE_NIGHT_NO) {
             // Night mode is not active
@@ -69,6 +81,14 @@ public class Todo extends AppCompatActivity implements OnDialogCloseListner {
             // Night mode is active
             imgTheme.setBackgroundResource(R.drawable.theme);
         }
+
+        imgMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!isMenuOpen)
+                    showPopupMenu();
+            }
+        });
 
         imgTheme.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +117,8 @@ public class Todo extends AppCompatActivity implements OnDialogCloseListner {
 
         @Override
         public void onDialogClose(DialogInterface dialogInterface) {
+            SharedPreferences sharedPreferences = getSharedPreferences("current_user", Context.MODE_PRIVATE);
+            String savedUsername = sharedPreferences.getString("username","");
             Intent intent = getIntent();
             String name = intent.getStringExtra("name");
             mList = myDB.getAllTasks();
@@ -109,4 +131,49 @@ public class Todo extends AppCompatActivity implements OnDialogCloseListner {
             adapter.setTasks(mList);
             adapter.notifyDataSetChanged();
         }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.nav_drawer, menu);
+        return true;
+    }
+    public void showPopupMenu() {
+        menu = new PopupMenu(this, imgMenu);
+        menu.inflate(R.menu.nav_drawer);
+
+        menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                switch(menuItem.getItemId()) {
+                    case R.id.nav_logout:
+                        SharedPreferences sharedPreferences = getSharedPreferences("current_user", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.clear();
+                        editor.apply();
+                        Intent login = new Intent(getApplicationContext(),Login.class);
+                        startActivity(login);
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
+
+        menu.setOnDismissListener(new PopupMenu.OnDismissListener() {
+            @Override
+            public void onDismiss(PopupMenu popupMenu) {
+                isMenuOpen = false;
+            }
+        });
+        menu.show();
+        isMenuOpen = true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(isMenuOpen) {
+            menu.dismiss();
+            isMenuOpen = false;
+        }
+        super.onBackPressed();
+    }
 }
