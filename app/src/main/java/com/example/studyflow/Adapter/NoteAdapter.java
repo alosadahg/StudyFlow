@@ -1,6 +1,7 @@
 package com.example.studyflow.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.studyflow.Model.NoteModel;
+import com.example.studyflow.NoteDetailsActivity;
 import com.example.studyflow.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -30,6 +32,15 @@ public class NoteAdapter extends FirestoreRecyclerAdapter<NoteModel, NoteAdapter
         holder.titleTextView.setText(note.title);
         holder.contentTextView.setText(note.content);
         holder.timestampTextView.setText(timestampFormat);
+
+        holder.itemView.setOnClickListener((v) -> {
+            Intent intent = new Intent(context, NoteDetailsActivity.class);
+            intent.putExtra("title", note.title);
+            intent.putExtra("content", note.content);
+            String docId = this.getSnapshots().getSnapshot(position).getId();
+            intent.putExtra("docId", docId);
+            context.startActivity(intent);
+        });
     }
 
     @NonNull
