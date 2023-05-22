@@ -3,15 +3,18 @@ package com.example.studyflow.Model;
 import com.google.firebase.Timestamp;
 
 public class NoteModel {
-    String title;
-    String content;
+    public String title;
+    public String content;
 
-    Timestamp timestamp;
+    public Timestamp timestamp;
 
     public NoteModel(String title, String content, com.google.firebase.Timestamp timestamp) {
         this.title = title;
         this.content = content;
         this.timestamp = timestamp;
+    }
+
+    public NoteModel() {
     }
 
     public String getTitle() {

@@ -34,7 +34,6 @@ public class NoteDetailsActivity extends AppCompatActivity {
         titleEditText = findViewById(R.id.notes_title_text);
         contentEditText = findViewById(R.id.notes_content_text);
         saveNoteBtn = findViewById(R.id.save_note_btn);
-
         saveNoteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,7 +45,6 @@ public class NoteDetailsActivity extends AppCompatActivity {
     void saveNote() {
         String noteTitle = titleEditText.getText().toString();
         String noteContent = contentEditText.getText().toString();
-
         if(noteTitle == null || noteTitle.isEmpty()) {
             titleEditText.setError("Title is require");
             return;

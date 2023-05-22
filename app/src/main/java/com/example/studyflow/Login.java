@@ -65,12 +65,15 @@ public class Login extends AppCompatActivity {
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     if (!queryDocumentSnapshots.isEmpty()) {
+                        // Hark: Use for querying the current user's document ID.
                         QueryDocumentSnapshot documentSnapshot = (QueryDocumentSnapshot) queryDocumentSnapshots.getDocuments().get(0);
                         String documentId = documentSnapshot.getId();
                         SharedPreferences sharedPreferences2 = getSharedPreferences("current_user", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences2.edit();
                         editor.putString("username", username);
                         editor.putString("password", password);
+                        // Hark: To be used in Notes.
+                        editor.putString("userDocumentID", documentId);
                         editor.apply();
                         Toast.makeText(Login.this, "Welcome " + username + "!", Toast.LENGTH_SHORT).show();
                         Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
@@ -81,7 +84,6 @@ public class Login extends AppCompatActivity {
                             SharedPreferences sharedPreferences = getSharedPreferences("offline_access", Context.MODE_PRIVATE);
                             String savedUsername = sharedPreferences.getString("username","");
                             String savedPassword = sharedPreferences.getString("password","");
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
                             if(username.equals(savedUsername) && password.equals(savedPassword)) {
                                 SharedPreferences current_user = getSharedPreferences("current_user", Context.MODE_PRIVATE);
                                 SharedPreferences.Editor current_editor = current_user.edit();

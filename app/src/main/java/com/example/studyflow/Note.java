@@ -2,6 +2,8 @@ package com.example.studyflow;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +16,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 
+import com.example.studyflow.Adapter.NoteAdapter;
+import com.example.studyflow.Model.NoteModel;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.sql.Timestamp;
 
@@ -25,6 +33,9 @@ public class Note extends AppCompatActivity {
     private ImageView imgMenu;
     private PopupMenu menu;
     private boolean isMenuOpen;
+    RecyclerView recyclerView;
+    NoteAdapter noteAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +46,9 @@ public class Note extends AppCompatActivity {
 
         imgMenu = findViewById(R.id.imgMenu);
         ImageView imgTheme = findViewById(R.id.imgTheme);
+        recyclerView = findViewById(R.id.recycler_view);
         isMenuOpen = false;
-
+        setupRecyclerView();
         int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         if (nightModeFlags == Configuration.UI_MODE_NIGHT_NO) {
             // Night mode is not active
@@ -66,9 +78,6 @@ public class Note extends AppCompatActivity {
                     showPopupMenu();
             }
         });
-
-        SharedPreferences sharedPreferences = getSharedPreferences("current_user", Context.MODE_PRIVATE);
-        userDocumentID = sharedPreferences.getString("userDocumentID", "");
         createNotes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,5 +132,39 @@ public class Note extends AppCompatActivity {
             isMenuOpen = false;
         }
         super.onBackPressed();
+    }
+
+    void setupRecyclerView() {
+        SharedPreferences sharedPreferences = getSharedPreferences("current_user", Context.MODE_PRIVATE);
+        userDocumentID = sharedPreferences.getString("userDocumentID", "");
+
+        CollectionReference notes = FirebaseFirestore.getInstance().collection("notes")
+                .document(userDocumentID).collection("myNotes");
+
+        Query query = notes.orderBy("timestamp", Query.Direction.DESCENDING);
+        FirestoreRecyclerOptions<NoteModel> options = new FirestoreRecyclerOptions.Builder<NoteModel>()
+                .setQuery(query, NoteModel.class).build();
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        noteAdapter = new NoteAdapter(options, this);
+        recyclerView.setAdapter(noteAdapter);
+        System.out.println("userDocumentID234: " + userDocumentID);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        noteAdapter.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        noteAdapter.stopListening();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        noteAdapter.notifyDataSetChanged();
     }
 }
