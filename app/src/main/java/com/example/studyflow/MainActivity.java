@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.crdNotes:
                 Toast.makeText(MainActivity.this,"Notes is clicked!",Toast.LENGTH_SHORT).show();
-                Intent notes = new Intent(getApplicationContext(), Notes.class);
+                Intent notes = new Intent(getApplicationContext(), Note.class);
 //                Toast.makeText(MainActivity.this,"Notes is clicked!",Toast.LENGTH_SHORT).show();
 
                 startActivity(notes);
