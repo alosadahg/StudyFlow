@@ -3,6 +3,8 @@ package com.example.studyflow;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
@@ -34,7 +36,6 @@ public class NoteDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_details);
 
-        userDocumentID = getIntent().getStringExtra("userDocumentID");
 
         titleEditText = findViewById(R.id.notes_title_text);
         contentEditText = findViewById(R.id.notes_content_text);
@@ -48,7 +49,6 @@ public class NoteDetailsActivity extends AppCompatActivity {
         if(docId != null && !docId.isEmpty()) {
             isEditMode = true;
         }
-        System.out.println("docId: " + docId);
         titleEditText.setText(title);
         contentEditText.setText(content);
 
@@ -76,20 +76,31 @@ public class NoteDetailsActivity extends AppCompatActivity {
     }
 
     void saveNoteToFirebase(NoteModel note) {
-        CollectionReference notes = FirebaseFirestore.getInstance().collection("notes")
-                .document(userDocumentID).collection("myNotes");
+        SharedPreferences sharedPreferences = getSharedPreferences("current_user", Context.MODE_PRIVATE);
+        userDocumentID = sharedPreferences.getString("userDocumentID", "");
+        DocumentReference noteRef;
+        if(isEditMode) {
+            System.out.println("DocumentID: " + docId + " userDocumentID: " + userDocumentID);
+            noteRef = FirebaseFirestore.getInstance().collection("notes")
+                    .document(userDocumentID).collection("myNotes").document(docId);
+        } else {
+            noteRef = FirebaseFirestore.getInstance().collection("notes")
+                    .document(userDocumentID).collection("myNotes").document();
+        }
 
-        notes.add(note).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-            @Override
-            public void onSuccess(DocumentReference documentReference) {
-                Toast.makeText(NoteDetailsActivity.this,"Notes added successfully.", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(NoteDetailsActivity.this,"Failed while adding note", Toast.LENGTH_SHORT).show();
-            }
-        });
+        noteRef.set(note)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(NoteDetailsActivity.this, "Note saved successfully.", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(NoteDetailsActivity.this, "Failed while saving note.", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }
