@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.content.Context;
 import android.content.Intent;
@@ -35,6 +36,8 @@ public class Note extends AppCompatActivity {
     private boolean isMenuOpen;
     RecyclerView recyclerView;
     NoteAdapter noteAdapter;
+
+    StaggeredGridLayoutManager staggeredGridLayoutManager;
 
 
     @Override
@@ -144,7 +147,9 @@ public class Note extends AppCompatActivity {
         Query query = notes.orderBy("timestamp", Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<NoteModel> options = new FirestoreRecyclerOptions.Builder<NoteModel>()
                 .setQuery(query, NoteModel.class).build();
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setHasFixedSize(true);
+        staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(staggeredGridLayoutManager);
         noteAdapter = new NoteAdapter(options, this);
         recyclerView.setAdapter(noteAdapter);
     }
