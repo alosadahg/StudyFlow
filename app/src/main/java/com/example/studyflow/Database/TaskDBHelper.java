@@ -63,14 +63,17 @@ public class TaskDBHelper extends SQLiteOpenHelper {
         db.delete(TABLE_NAME , "ID=?" , new String[]{String.valueOf(id)});
     }
 
-    public List<ToDoModel> getAllTasks(){
+    public List<ToDoModel> getAllTasks(String username){
 
         db = this.getWritableDatabase();
         Cursor cursor = null;
         List<ToDoModel> modelList = new ArrayList<>();
         db.beginTransaction();
+        String selection = COL_4 + "=?";
+        String[] selectionArgs = {username};
+
         try {
-            cursor = db.query(TABLE_NAME , null , null , null , null , null , null);
+            cursor = db.query(TABLE_NAME , null , selection , selectionArgs , null , null , null);
             if (cursor != null && cursor.moveToFirst()) {
                 int idIndex = cursor.getColumnIndex(COL_1);
                 int taskIndex = cursor.getColumnIndex(COL_2);

@@ -2,12 +2,8 @@ package com.example.studyflow;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -18,23 +14,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 
-import com.example.studyflow.Adapter.ToDoAdapter;
-import com.example.studyflow.Database.TaskDBHelper;
-import com.example.studyflow.Model.ToDoModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-public class Todo extends AppCompatActivity implements OnDialogCloseListner {
-
-    private RecyclerView mRecyclerview;
-    private FloatingActionButton fab;
-    private TaskDBHelper myDB;
-    private List<ToDoModel> mList;
-    private List<ToDoModel> displayList;
-    private ToDoAdapter adapter;
+public class Notes extends AppCompatActivity {
+    FloatingActionButton createNotes;
 
     private ImageView imgMenu;
     private PopupMenu menu;
@@ -43,29 +26,12 @@ public class Todo extends AppCompatActivity implements OnDialogCloseListner {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_todo);
+        setContentView(R.layout.activity_note);
 
-        ImageView imgTheme = findViewById(R.id.imgTheme);
-        mRecyclerview = findViewById(R.id.recyclerView);
-        fab = findViewById(R.id.btnAddTask);
-        myDB = new TaskDBHelper(Todo.this);
-        mList = new ArrayList<>();
-        displayList = new ArrayList<>();
-        adapter = new ToDoAdapter(myDB, Todo.this);
-
-        mRecyclerview.setHasFixedSize(true);
-        mRecyclerview.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerview.setAdapter(adapter);
-        Intent intent = getIntent();
-        String name = intent.getStringExtra("name");
-
-        SharedPreferences sharedPreferences = getSharedPreferences("current_user", Context.MODE_PRIVATE);
-        String savedUsername = sharedPreferences.getString("username","");
-        mList = myDB.getAllTasks(savedUsername);
-        Collections.reverse(mList);
-        adapter.setTasks(mList);
+        createNotes = findViewById(R.id.createNotes);
 
         imgMenu = findViewById(R.id.imgMenu);
+        ImageView imgTheme = findViewById(R.id.imgTheme);
         isMenuOpen = false;
 
         int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
@@ -76,15 +42,6 @@ public class Todo extends AppCompatActivity implements OnDialogCloseListner {
             // Night mode is active
             imgTheme.setBackgroundResource(R.drawable.theme);
         }
-
-        imgMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!isMenuOpen)
-                    showPopupMenu();
-            }
-        });
-
         imgTheme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,26 +56,22 @@ public class Todo extends AppCompatActivity implements OnDialogCloseListner {
             }
         });
 
-        fab.setOnClickListener(new View.OnClickListener() {
+        imgMenu.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                AddNewTask.newInstance().show(getSupportFragmentManager(), AddNewTask.TAG);
+            public void onClick(View view) {
+                if(!isMenuOpen)
+                    showPopupMenu();
             }
         });
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new TodoViewTouchHelper(adapter));
-        itemTouchHelper.attachToRecyclerView(mRecyclerview);
+
+        createNotes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
-
-        @Override
-        public void onDialogClose(DialogInterface dialogInterface) {
-            SharedPreferences sharedPreferences = getSharedPreferences("current_user", Context.MODE_PRIVATE);
-            String savedUsername = sharedPreferences.getString("username","");
-            mList = myDB.getAllTasks(savedUsername);
-            Collections.reverse(mList);
-            adapter.setTasks(mList);
-            adapter.notifyDataSetChanged();
-        }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.nav_drawer, menu);

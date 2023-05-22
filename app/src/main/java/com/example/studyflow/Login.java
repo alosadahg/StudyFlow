@@ -58,51 +58,47 @@ public class Login extends AppCompatActivity {
     }
 
     private void login(String username, String password) {
-        if(NetworkCheck.isNetworkAvailable(getApplicationContext())==false) {
-            SharedPreferences sharedPreferences = getSharedPreferences("offline_access", Context.MODE_PRIVATE);
-            String savedUsername = sharedPreferences.getString("username","");
-            String savedPassword = sharedPreferences.getString("password","");
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            if(username.equals(savedUsername) && password.equals(savedPassword)) {
-                SharedPreferences current_user = getSharedPreferences("current_user", Context.MODE_PRIVATE);
-                SharedPreferences.Editor current_editor = current_user.edit();
-                current_editor.putString("username", username);
-                current_editor.putString("password", password);
-                current_editor.apply();
-                Toast.makeText(Login.this, "Welcome " + username + "!", Toast.LENGTH_SHORT).show();
-                Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
-                mainIntent.putExtra("name", username);
-                startActivity(mainIntent);
-            } else {
-                Toast.makeText(Login.this, "Incorrect username or password", Toast.LENGTH_SHORT).show();
-            }
-        } else {
-            CollectionReference users = firebase.collection("users");
+        CollectionReference users = firebase.collection("users");
 
-            users.whereEqualTo("username", username)
-                    .whereEqualTo("password", password)
-                    .get()
-                    .addOnSuccessListener(queryDocumentSnapshots -> {
-                        if (!queryDocumentSnapshots.isEmpty()) {
-                            QueryDocumentSnapshot documentSnapshot = (QueryDocumentSnapshot) queryDocumentSnapshots.getDocuments().get(0);
-                            String documentId = documentSnapshot.getId();
-
-
-                            SharedPreferences sharedPreferences = getSharedPreferences("current_user", Context.MODE_PRIVATE);
+        users.whereEqualTo("username", username)
+                .whereEqualTo("password", password)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        QueryDocumentSnapshot documentSnapshot = (QueryDocumentSnapshot) queryDocumentSnapshots.getDocuments().get(0);
+                        String documentId = documentSnapshot.getId();
+                        SharedPreferences sharedPreferences2 = getSharedPreferences("current_user", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences2.edit();
+                        editor.putString("username", username);
+                        editor.putString("password", password);
+                        editor.apply();
+                        Toast.makeText(Login.this, "Welcome " + username + "!", Toast.LENGTH_SHORT).show();
+                        Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
+                        mainIntent.putExtra("name", username);
+                        startActivity(mainIntent);
+                    } else {
+                        if(NetworkCheck.isNetworkAvailable(getApplicationContext())==false) {
+                            SharedPreferences sharedPreferences = getSharedPreferences("offline_access", Context.MODE_PRIVATE);
+                            String savedUsername = sharedPreferences.getString("username","");
+                            String savedPassword = sharedPreferences.getString("password","");
                             SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString("username", username);
-                            editor.putString("password", password);
-                            editor.putString("userDocumentID", documentId);
-                            editor.apply();
-                            Toast.makeText(Login.this, "Welcome " + username + "!", Toast.LENGTH_SHORT).show();
-                            Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
-                            mainIntent.putExtra("name", username);
-                            startActivity(mainIntent);
-                        } else {
-                            Toast.makeText(Login.this, "Incorrect username or password", Toast.LENGTH_SHORT).show();
+                            if(username.equals(savedUsername) && password.equals(savedPassword)) {
+                                SharedPreferences current_user = getSharedPreferences("current_user", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor current_editor = current_user.edit();
+                                current_editor.putString("username", username);
+                                current_editor.putString("password", password);
+                                current_editor.apply();
+                                Toast.makeText(Login.this, "Welcome " + username + "!", Toast.LENGTH_SHORT).show();
+                                Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
+                                mainIntent.putExtra("name", username);
+                                startActivity(mainIntent);
+                            } else {
+                                Toast.makeText(Login.this, "Incorrect username or password", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    });
-        }
+
+                    }
+                });
     }
 
     @Override
