@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.studyflow.Model.NoteModel;
@@ -24,6 +25,10 @@ public class NoteDetailsActivity extends AppCompatActivity {
     ImageButton saveNoteBtn;
     String userDocumentID;
 
+    TextView pageTitleTextView;
+    String title, content, docId;
+    boolean isEditMode = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +39,22 @@ public class NoteDetailsActivity extends AppCompatActivity {
         titleEditText = findViewById(R.id.notes_title_text);
         contentEditText = findViewById(R.id.notes_content_text);
         saveNoteBtn = findViewById(R.id.save_note_btn);
+        pageTitleTextView = findViewById(R.id.page_title);
+
+        title = getIntent().getStringExtra("title");
+        content = getIntent().getStringExtra("content");
+        docId = getIntent().getStringExtra("docId");
+
+        if(docId != null && !docId.isEmpty()) {
+            isEditMode = true;
+        }
+        System.out.println("docId: " + docId);
+        titleEditText.setText(title);
+        contentEditText.setText(content);
+
+        if(isEditMode) {
+            pageTitleTextView.setText("Edit your note");
+        }
         saveNoteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

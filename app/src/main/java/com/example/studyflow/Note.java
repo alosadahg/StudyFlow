@@ -147,7 +147,6 @@ public class Note extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         noteAdapter = new NoteAdapter(options, this);
         recyclerView.setAdapter(noteAdapter);
-        System.out.println("userDocumentID234: " + userDocumentID);
     }
 
     @Override
