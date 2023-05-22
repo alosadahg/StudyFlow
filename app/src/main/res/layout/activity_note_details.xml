@@ -65,4 +65,17 @@
             android:padding="12dp" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/delete_note_text_view_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Delete note"
+        android:visibility="gone"
+        android:textSize="18sp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="696dp"
+        android:textColor="#FF0000"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

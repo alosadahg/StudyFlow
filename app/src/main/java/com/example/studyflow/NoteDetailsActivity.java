@@ -30,6 +30,7 @@ public class NoteDetailsActivity extends AppCompatActivity {
     TextView pageTitleTextView;
     String title, content, docId;
     boolean isEditMode = false;
+    TextView deleteNoteTextViewBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,7 @@ public class NoteDetailsActivity extends AppCompatActivity {
         contentEditText = findViewById(R.id.notes_content_text);
         saveNoteBtn = findViewById(R.id.save_note_btn);
         pageTitleTextView = findViewById(R.id.page_title);
+        deleteNoteTextViewBtn = findViewById(R.id.delete_note_text_view_btn);
 
         title = getIntent().getStringExtra("title");
         content = getIntent().getStringExtra("content");
@@ -54,11 +56,19 @@ public class NoteDetailsActivity extends AppCompatActivity {
 
         if(isEditMode) {
             pageTitleTextView.setText("Edit your note");
+            deleteNoteTextViewBtn.setVisibility(View.VISIBLE);
         }
         saveNoteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 saveNote();
+            }
+        });
+
+        deleteNoteTextViewBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteFromFirebase();
             }
         });
     }
@@ -100,6 +110,29 @@ public class NoteDetailsActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(NoteDetailsActivity.this, "Failed while saving note.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    void deleteFromFirebase() {
+        SharedPreferences sharedPreferences = getSharedPreferences("current_user", Context.MODE_PRIVATE);
+        userDocumentID = sharedPreferences.getString("userDocumentID", "");
+
+        DocumentReference noteRef = FirebaseFirestore.getInstance().collection("notes")
+                .document(userDocumentID).collection("myNotes").document(docId);;
+
+        noteRef.delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(NoteDetailsActivity.this, "Note deleted successfully.", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(NoteDetailsActivity.this, "Failed while deleting note.", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
