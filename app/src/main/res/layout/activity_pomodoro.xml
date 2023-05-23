@@ -98,6 +98,8 @@
 
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/toggleButton"
+        app:selectionRequired="true"
+        app:singleSelection="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:weightSum="3"
@@ -115,7 +117,7 @@
             android:text="Focus" />
 
         <Button
-            android:id="@+id/btnPomodoroShortBreak"
+            android:id="@+id/btnPomodoroLongBreak"
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -123,7 +125,7 @@
             android:text="Long" />
 
         <Button
-            android:id="@+id/btnPomodoroLongBreak"
+            android:id="@+id/btnPomodoroShortBreak"
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="0dp"
             android:layout_weight="1"
