@@ -82,7 +82,7 @@
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/txtPomodoroTimer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -95,6 +95,41 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/circularProgressIndicator2"
         app:layout_constraintVertical_bias="0.0" />
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/toggleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:weightSum="3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtPomodoroTimer"
+        tools:ignore="MissingConstraints">
+
+        <Button
+            android:id="@+id/btnPomodoroFocus"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Focus" />
+
+        <Button
+            android:id="@+id/btnPomodoroShortBreak"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Long" />
+
+        <Button
+            android:id="@+id/btnPomodoroLongBreak"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Short" />
+    </com.google.android.material.button.MaterialButtonToggleGroup>
 
     <ImageView
         android:id="@+id/imageView5"
@@ -126,13 +161,12 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/materialButton"
+        android:id="@+id/btnPomodoroStart"
         style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="149dp"
         android:layout_height="49dp"
+        android:layout_marginBottom="64dp"
         android:backgroundTint="#E05D5D"
-        app:strokeWidth="3dp"
-        app:strokeColor="@color/button_border"
         android:fontFamily="sans-serif-medium"
         android:text="START"
         android:textColor="@color/text_color"
@@ -140,36 +174,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
-        app:layout_constraintVertical_bias="0.423"
+        app:layout_constraintTop_toBottomOf="@+id/toggleButton"
+        app:layout_constraintVertical_bias="1.0"
+        app:strokeColor="@color/button_border"
+        app:strokeWidth="3dp"
         tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/marykate"
-        android:textColor="@color/pomodoro_color_gray"
-        android:text="Focus"
-        app:layout_constraintBottom_toTopOf="@+id/materialButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
-        app:layout_constraintVertical_bias="0.047" />
-
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="16dp"
-        android:layout_height="17dp"
-        android:layout_marginTop="2dp"
-        android:rotation="90"
-        app:layout_constraintBottom_toTopOf="@+id/materialButton"
-        app:layout_constraintEnd_toStartOf="@+id/textView3"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/ic_baseline_compare_arrows_24"
-        app:tint="@color/pomodoro_color_gray" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,11 +6,18 @@ import androidx.appcompat.app.AppCompatDelegate;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class Pomodoro extends AppCompatActivity {
-
+    private TextView txtPomodoroTimer;
+    private CountDownTimer timer;
+    private boolean isTimerRunning = false;
+    private static final long POMODORO_TIME = 25 * 60 * 1000; // 25 minutes in milliseconds
+    private static final long LONG_BREAK_TIME = 15 * 60 * 1000; // 15 minutes in milliseconds
+    private static final long SHORT_BREAK_TIME = 5 * 60 * 1000; // 5 minutes in milliseconds
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -26,6 +33,18 @@ public class Pomodoro extends AppCompatActivity {
         ImageView imgTheme = findViewById(R.id.imgTheme);
         ImageView catTheme = findViewById(R.id.catTheme);
         ImageView ic_close = findViewById(R.id.ic_close);
+
+        txtPomodoroTimer = findViewById(R.id.txtPomodoroTimer);
+        txtPomodoroTimer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isTimerRunning) {
+                    startPomodoroTimer();
+                } else {
+                    stopTimer();
+                }
+            }
+        });
 
         int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         if (nightModeFlags == Configuration.UI_MODE_NIGHT_NO) {
@@ -60,5 +79,76 @@ public class Pomodoro extends AppCompatActivity {
         });
 
 
+    }
+
+    private void startPomodoroTimer() {
+        timer = new CountDownTimer(POMODORO_TIME, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                updateTimerText(millisUntilFinished);
+            }
+
+            @Override
+            public void onFinish() {
+                // Pomodoro timer finished
+                // Perform any necessary actions here
+                startLongBreakTimer();
+            }
+        };
+
+        timer.start();
+        isTimerRunning = true;
+    }
+
+    private void startLongBreakTimer() {
+        timer = new CountDownTimer(LONG_BREAK_TIME, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                updateTimerText(millisUntilFinished);
+            }
+
+            @Override
+            public void onFinish() {
+                // Long break timer finished
+                // Perform any necessary actions here
+                startPomodoroTimer();
+            }
+        };
+
+        timer.start();
+        isTimerRunning = true;
+    }
+
+    private void startShortBreakTimer() {
+        timer = new CountDownTimer(SHORT_BREAK_TIME, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                updateTimerText(millisUntilFinished);
+            }
+
+            @Override
+            public void onFinish() {
+                // Short break timer finished
+                // Perform any necessary actions here
+                startPomodoroTimer();
+            }
+        };
+
+        timer.start();
+        isTimerRunning = true;
+    }
+
+    private void stopTimer() {
+        timer.cancel();
+        isTimerRunning = false;
+        updateTimerText(POMODORO_TIME);
+    }
+
+    private void updateTimerText(long millisUntilFinished) {
+        int minutes = (int) (millisUntilFinished / 1000) / 60;
+        int seconds = (int) (millisUntilFinished / 1000) % 60;
+
+        String timeText = String.format("%02d:%02d", minutes, seconds);
+        txtPomodoroTimer.setText(timeText);
     }
 }
