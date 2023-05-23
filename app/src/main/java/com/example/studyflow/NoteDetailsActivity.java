@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.Image;
 import android.os.Bundle;
@@ -24,7 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class NoteDetailsActivity extends AppCompatActivity {
 
     EditText titleEditText, contentEditText;
-    ImageButton saveNoteBtn;
+    ImageButton saveNoteBtn, shareNoteBtn;
     String userDocumentID;
 
     TextView pageTitleTextView;
@@ -43,6 +44,20 @@ public class NoteDetailsActivity extends AppCompatActivity {
         saveNoteBtn = findViewById(R.id.save_note_btn);
         pageTitleTextView = findViewById(R.id.page_title);
         deleteNoteTextViewBtn = findViewById(R.id.delete_note_text_view_btn);
+        shareNoteBtn = findViewById(R.id.shareNoteBtn);
+
+        shareNoteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent shareIntent = new Intent();
+                shareIntent.setAction(Intent.ACTION_SEND);
+                shareIntent.putExtra(Intent.EXTRA_TEXT, titleEditText.getText().toString() + "\n"
+                        + contentEditText.getText().toString());
+                shareIntent.setType("text/plain");
+                shareIntent = Intent.createChooser(shareIntent, "Share Via: ");
+                startActivity(shareIntent);
+            }
+        });
 
         title = getIntent().getStringExtra("title");
         content = getIntent().getStringExtra("content");
