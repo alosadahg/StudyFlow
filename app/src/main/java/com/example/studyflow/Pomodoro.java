@@ -3,6 +3,7 @@ package com.example.studyflow;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import com.google.android.material.button.MaterialButtonToggleGroup;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -25,6 +26,9 @@ public class Pomodoro extends AppCompatActivity {
     private MaterialButtonToggleGroup toggleButton;
     private Button btnPomodoroStart;
     private int selectedButtonId;
+    private CircularProgressIndicator circularProgressIndicator;
+    private long timerDuration;
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -58,6 +62,7 @@ public class Pomodoro extends AppCompatActivity {
                     selectedButtonId = checkedId;
                     if(isTimerRunning) {
                         stopTimer();
+                        circularProgressIndicator.setProgress(0);
                     }
                     switch (selectedButtonId) {
                         case R.id.btnPomodoroFocus:
@@ -116,6 +121,9 @@ public class Pomodoro extends AppCompatActivity {
             }
         });
 
+        circularProgressIndicator = findViewById(R.id.circularProgressIndicator2);
+        circularProgressIndicator.setMax((int) POMODORO_TIME / 1000);
+
         int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         if (nightModeFlags == Configuration.UI_MODE_NIGHT_NO) {
             // Night mode is not active
@@ -152,16 +160,21 @@ public class Pomodoro extends AppCompatActivity {
     }
 
     private void startPomodoroTimer() {
-        timer = new CountDownTimer(POMODORO_TIME, 1000) {
+        timerDuration = POMODORO_TIME;
+        circularProgressIndicator.setProgress(0);
+        timer = new CountDownTimer(timerDuration, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
+                long remainingTime = timerDuration - millisUntilFinished;
                 updateTimerText(millisUntilFinished);
+                updateProgress(remainingTime);
             }
 
             @Override
             public void onFinish() {
                 // Pomodoro timer finished
                 // Perform any necessary actions here
+                updateProgress(timerDuration); // Set progress to maximum
                 startLongBreakTimer();
             }
         };
@@ -171,18 +184,23 @@ public class Pomodoro extends AppCompatActivity {
     }
 
     private void startLongBreakTimer() {
+        timerDuration = LONG_BREAK_TIME;
+        circularProgressIndicator.setProgress(0);
 
-        timer = new CountDownTimer(LONG_BREAK_TIME, 1000) {
+        timer = new CountDownTimer(timerDuration, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
+                long remainingTime = timerDuration - millisUntilFinished;
                 updateTimerText(millisUntilFinished);
+                updateProgress(remainingTime);
             }
 
             @Override
             public void onFinish() {
                 // Long break timer finished
                 // Perform any necessary actions here
-                startPomodoroTimer();
+                updateProgress(timerDuration); // Set progress to maximum
+                startLongBreakTimer();
             }
         };
 
@@ -191,17 +209,22 @@ public class Pomodoro extends AppCompatActivity {
     }
 
     private void startShortBreakTimer() {
-        timer = new CountDownTimer(SHORT_BREAK_TIME, 1000) {
+        timerDuration = SHORT_BREAK_TIME;
+        circularProgressIndicator.setProgress(0);
+        timer = new CountDownTimer(timerDuration, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
+                long remainingTime = timerDuration - millisUntilFinished;
                 updateTimerText(millisUntilFinished);
+                updateProgress(remainingTime);
             }
 
             @Override
             public void onFinish() {
                 // Short break timer finished
                 // Perform any necessary actions here
-                startPomodoroTimer();
+                updateProgress(timerDuration); // Set progress to maximum
+                startLongBreakTimer();
             }
         };
 
@@ -218,14 +241,16 @@ public class Pomodoro extends AppCompatActivity {
     private void updateTimerText(long millisUntilFinished) {
         int minutes = (int) (millisUntilFinished / 1000) / 60;
         int seconds = (int) (millisUntilFinished / 1000) % 60;
-
+        int progress = (int) ((timerDuration - millisUntilFinished) / 1000);
+        circularProgressIndicator.setProgress(progress);
         String timeText = String.format("%02d:%02d", minutes, seconds);
         txtPomodoroTimer.setText(timeText);
     }
 
-    private void toggleButtonStates(boolean focusEnabled, boolean shortBreakEnabled, boolean longBreakEnabled) {
-        btnFocus.setEnabled(focusEnabled);
-        btnShortBreak.setEnabled(shortBreakEnabled);
-        btnLongBreak.setEnabled(longBreakEnabled);
+    private void updateProgress(long remainingTime) {
+        int progress = (int) (remainingTime / 1000);
+        int maxProgress = (int) (timerDuration / 1000);
+        circularProgressIndicator.setProgressCompat(progress, true);
+        circularProgressIndicator.setMax(maxProgress);
     }
 }
