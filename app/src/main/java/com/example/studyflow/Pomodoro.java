@@ -1,7 +1,6 @@
 package com.example.studyflow;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 
@@ -28,6 +27,8 @@ public class Pomodoro extends AppCompatActivity {
     private int selectedButtonId;
     private CircularProgressIndicator circularProgressIndicator;
     private long timerDuration;
+    private long timeElapsed;
+    int timerID = -1;
 
     @Override
     public void onBackPressed() {
@@ -41,7 +42,6 @@ public class Pomodoro extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pomodoro);
 
-        ImageView imgTheme = findViewById(R.id.imgTheme);
         ImageView catTheme = findViewById(R.id.catTheme);
         ImageView ic_close = findViewById(R.id.ic_close);
 
@@ -60,78 +60,52 @@ public class Pomodoro extends AppCompatActivity {
                 if (isChecked) {
                     // Handle the button selection
                     selectedButtonId = checkedId;
-                    if(isTimerRunning) {
-                        stopTimer();
-                        circularProgressIndicator.setProgress(0);
                     }
-                    switch (selectedButtonId) {
-                        case R.id.btnPomodoroFocus:
-                            // Perform action for the "Focus" button
-                            updateTimerText(POMODORO_TIME);
-                            break;
-                        case R.id.btnPomodoroLongBreak:
-                            // Perform action for the "Long" button
-                            updateTimerText(LONG_BREAK_TIME);
-                            break;
-                        case R.id.btnPomodoroShortBreak:
-                            updateTimerText(SHORT_BREAK_TIME);
-                            // Perform action for the "Short" button
-                            break;
-                    }
-                }
-            }
-        });
-        imgTheme.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                stopTimer();
             }
         });
 
         btnPomodoroStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(isTimerRunning) {
+                    stopTimer();
+                }
+
                 if (selectedButtonId != -1) {
-                    if (!isTimerRunning) {
-                        switch (selectedButtonId) {
-                            case R.id.btnPomodoroFocus:
-                                startPomodoroTimer();
-                                break;
-                            case R.id.btnPomodoroLongBreak:
-                                startLongBreakTimer();
-                                break;
-                            case R.id.btnPomodoroShortBreak:
-                                startShortBreakTimer();
-                                break;
-                        }
+                    switch (selectedButtonId) {
+                        case R.id.btnPomodoroFocus:
+                            startPomodoroTimer();
+                            break;
+                        case R.id.btnPomodoroLongBreak:
+                            startLongBreakTimer();
+                            break;
+                        case R.id.btnPomodoroShortBreak:
+                            startShortBreakTimer();
+                            break;
                     }
                 }
             }
         });
 
         txtPomodoroTimer = findViewById(R.id.txtPomodoroTimer);
-        txtPomodoroTimer.setOnClickListener(new View.OnClickListener() {
+
+        circularProgressIndicator = findViewById(R.id.circularProgressIndicator2);
+
+        circularProgressIndicator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isTimerRunning) {
-                    startPomodoroTimer();
-                } else {
-                    stopTimer();
+                if (isTimerRunning) {
+                    pauseTimer();
                 }
             }
         });
 
-        circularProgressIndicator = findViewById(R.id.circularProgressIndicator2);
-        circularProgressIndicator.setMax((int) POMODORO_TIME / 1000);
-
         int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         if (nightModeFlags == Configuration.UI_MODE_NIGHT_NO) {
             // Night mode is not active
-            imgTheme.setBackgroundResource(R.drawable.theme_light);
             catTheme.setBackgroundResource(R.drawable.pomodoro_cat);
         } else {
             // Night mode is active
-            imgTheme.setBackgroundResource(R.drawable.theme);
             catTheme.setBackgroundResource(R.drawable.pomodoro_cat_night);
         }
 
@@ -142,24 +116,10 @@ public class Pomodoro extends AppCompatActivity {
                 startActivity(main);
             }
         });
-        imgTheme.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-                if (nightModeFlags == Configuration.UI_MODE_NIGHT_NO) {
-                    // Night mode is not active
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                } else {
-                    // Night mode is active
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                }
-            }
-        });
-
-
     }
 
     private void startPomodoroTimer() {
+        timeElapsed = 0;
         timerDuration = POMODORO_TIME;
         circularProgressIndicator.setProgress(0);
         timer = new CountDownTimer(timerDuration, 1000) {
@@ -174,16 +134,17 @@ public class Pomodoro extends AppCompatActivity {
             public void onFinish() {
                 // Pomodoro timer finished
                 // Perform any necessary actions here
-                updateProgress(timerDuration); // Set progress to maximum
-                startLongBreakTimer();
+                stopTimer();
+                updateTimerText(POMODORO_TIME);
             }
         };
-
+        timerID = 1;
         timer.start();
         isTimerRunning = true;
     }
 
     private void startLongBreakTimer() {
+        timeElapsed = 0;
         timerDuration = LONG_BREAK_TIME;
         circularProgressIndicator.setProgress(0);
 
@@ -199,16 +160,17 @@ public class Pomodoro extends AppCompatActivity {
             public void onFinish() {
                 // Long break timer finished
                 // Perform any necessary actions here
-                updateProgress(timerDuration); // Set progress to maximum
-                startLongBreakTimer();
+                stopTimer();
+                updateTimerText(LONG_BREAK_TIME);
             }
         };
-
+        timerID = 2;
         timer.start();
         isTimerRunning = true;
     }
 
     private void startShortBreakTimer() {
+        timeElapsed = 0;
         timerDuration = SHORT_BREAK_TIME;
         circularProgressIndicator.setProgress(0);
         timer = new CountDownTimer(timerDuration, 1000) {
@@ -223,17 +185,18 @@ public class Pomodoro extends AppCompatActivity {
             public void onFinish() {
                 // Short break timer finished
                 // Perform any necessary actions here
-                updateProgress(timerDuration); // Set progress to maximum
-                startLongBreakTimer();
+                stopTimer();
+                updateTimerText(SHORT_BREAK_TIME);
             }
         };
-
+        timerID = 3;
         timer.start();
         isTimerRunning = true;
     }
 
     @SuppressLint("NonConstantResourceId")
     private void stopTimer() {
+        timerID = -1;
         timer.cancel();
         isTimerRunning = false;
     }
@@ -253,4 +216,11 @@ public class Pomodoro extends AppCompatActivity {
         circularProgressIndicator.setProgressCompat(progress, true);
         circularProgressIndicator.setMax(maxProgress);
     }
+
+    private void pauseTimer() {
+        timer.cancel();
+        isTimerRunning = false;
+    }
+
+
 }

@@ -34,20 +34,6 @@
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/ic_close" />
 
-            <ImageView
-                android:id="@+id/imgTheme"
-                android:layout_width="30dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/theme_light"
-                android:scaleType="centerInside" />
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
 
