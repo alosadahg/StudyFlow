@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbarStyle="insideOverlay"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/activity_header"/>
+
+
+
+        <TextView
+            android:id="@+id/txtQuizzes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="@color/text_color"
+            android:text="Quizzes"
+            android:textSize="20sp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_below="@+id/header"/>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/crdPomodoro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_row="0"
+                android:layout_rowWeight="1"
+                android:layout_column="0"
+                android:layout_columnWeight="1"
+                android:layout_marginHorizontal="20dp"
+                android:clickable="true"
+                app:cardBackgroundColor="#BFCCF1"
+                app:cardCornerRadius="14dp"
+                app:cardUseCompatPadding="true">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/imageView6"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="10dp"
+                        app:srcCompat="@drawable/ic_quiz" />
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_toEndOf="@+id/imageView6"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="Information Management"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/textView4"                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_below="@+id/textView3"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="-26dp"
+                        android:layout_toRightOf="@id/imageView6"
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="5 questions"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <Button
+                        android:id="@+id/button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_below="@+id/textView4"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginLeft="70dp"
+                        android:layout_marginTop="25dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_toRightOf="@id/imageView6"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="Answer"
+                        android:textSize="18sp"
+                        app:backgroundTint="#74A367"
+                        app:cornerRadius="14dp" />
+
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+
+</ScrollView>
