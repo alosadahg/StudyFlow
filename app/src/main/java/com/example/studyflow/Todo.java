@@ -132,6 +132,10 @@ public class Todo extends AppCompatActivity implements OnDialogCloseListner {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 switch(menuItem.getItemId()) {
+                    case R.id.nav_reminder:
+                        Intent reminder = new Intent(getApplicationContext(),Reminder.class);
+                        startActivity(reminder);
+                        return true;
                     case R.id.nav_logout:
                         SharedPreferences sharedPreferences = getSharedPreferences("current_user", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();

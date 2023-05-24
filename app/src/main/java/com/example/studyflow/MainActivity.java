@@ -125,6 +125,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 switch(menuItem.getItemId()) {
+                    case R.id.nav_reminder:
+                        Intent reminder = new Intent(getApplicationContext(),Reminder.class);
+                        startActivity(reminder);
+                        return true;
                     case R.id.nav_logout:
                         SharedPreferences sharedPreferences = getSharedPreferences("current_user", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -132,10 +136,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         editor.apply();
                         Intent login = new Intent(getApplicationContext(),Login.class);
                         startActivity(login);
-                        return true;
-                    case R.id.nav_reminder:
-                        Intent reminder = new Intent(getApplicationContext(),Reminder.class);
-                        startActivity(reminder);
                         return true;
                     default:
                         return false;
