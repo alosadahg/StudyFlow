@@ -7,6 +7,11 @@
             android:checkable="false"
             android:icon="@drawable/baseline_exit"
             android:title="Logout" />
+        <item
+            android:id="@+id/nav_reminder"
+            android:checkable="false"
+            android:icon="@drawable/baseline_exit"
+            android:title="Reminder" />
     </group>
 
 </menu>

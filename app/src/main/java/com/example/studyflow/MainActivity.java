@@ -133,6 +133,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Intent login = new Intent(getApplicationContext(),Login.class);
                         startActivity(login);
                         return true;
+                    case R.id.nav_reminder:
+                        Intent reminder = new Intent(getApplicationContext(),Reminder.class);
+                        startActivity(reminder);
+                        return true;
                     default:
                         return false;
                 }
