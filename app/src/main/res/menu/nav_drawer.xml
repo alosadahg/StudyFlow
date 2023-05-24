@@ -3,15 +3,20 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_logout"
-            android:checkable="false"
-            android:icon="@drawable/baseline_exit"
-            android:title="Logout" />
-        <item
             android:id="@+id/nav_reminder"
             android:checkable="false"
             android:icon="@drawable/baseline_exit"
             android:title="Reminder" />
+        <item
+            android:id="@+id/nav_countdownTimer"
+            android:checkable="false"
+            android:icon="@drawable/baseline_exit"
+            android:title="Countdown Timer" />
+        <item
+            android:id="@+id/nav_logout"
+            android:checkable="false"
+            android:icon="@drawable/baseline_exit"
+            android:title="Logout" />
     </group>
 
 </menu>
