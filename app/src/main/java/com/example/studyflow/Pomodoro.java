@@ -20,9 +20,7 @@ public class Pomodoro extends AppCompatActivity {
     private boolean isTimerRunning = false;
     private static final long POMODORO_TIME = 25 * 60 * 1000; // 25 minutes in milliseconds
     private static final long LONG_BREAK_TIME = 15 * 60 * 1000; // 15 minutes in milliseconds
-    private static final long SHORT_BREAK_TIME = 10 * 1000;
-//            5 * 60 * 1000; // 5 minutes in milliseconds
-
+    private static final long SHORT_BREAK_TIME = 5 * 60 * 1000;
     private MaterialButtonToggleGroup toggleButton;
     private Button btnPomodoroStart;
     private int selectedButtonId;
