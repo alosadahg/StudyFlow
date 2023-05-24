@@ -38,16 +38,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         CardView cardPomodoro = findViewById(R.id.crdPomodoro);
         CardView cardTodo = findViewById(R.id.crdTodo);
         CardView cardQuizzes = findViewById(R.id.crdQuizzes);
-        CardView cardFlashcards = findViewById(R.id.crdFlashcards);
         CardView cardNotes = findViewById(R.id.crdNotes);
-        CardView cardStudySet = findViewById(R.id.crdStudySet);
 
         cardPomodoro.setOnClickListener(this);
         cardTodo.setOnClickListener(this);
         cardQuizzes.setOnClickListener(this);
-        cardFlashcards.setOnClickListener(this);
         cardNotes.setOnClickListener(this);
-        cardStudySet.setOnClickListener(this);
 
         imgMenu = findViewById(R.id.imgMenu);
         ImageView imgTheme = findViewById(R.id.imgTheme);
@@ -102,10 +98,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(todo);
                 break;
             case R.id.crdQuizzes:
-                Toast.makeText(MainActivity.this,"Quizzes is clicked!",Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.crdFlashcards:
-                Toast.makeText(MainActivity.this,"Flashcards is clicked!",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MainActivity.this,"Quizzes is clicked!",Toast.LENGTH_SHORT).show();
+                Intent quizzes = new Intent(getApplicationContext(), Quizzes.class);
+                startActivity(quizzes);
                 break;
             case R.id.crdNotes:
                 Toast.makeText(MainActivity.this,"Notes is clicked!",Toast.LENGTH_SHORT).show();
@@ -113,9 +108,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                Toast.makeText(MainActivity.this,"Notes is clicked!",Toast.LENGTH_SHORT).show();
 
                 startActivity(notes);
-                break;
-            case R.id.crdStudySet:
-                Toast.makeText(MainActivity.this,"Study sets is clicked!",Toast.LENGTH_SHORT).show();
                 break;
         }
     }

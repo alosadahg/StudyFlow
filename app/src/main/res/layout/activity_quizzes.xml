@@ -83,7 +83,7 @@
                         android:textSize="16sp" />
 
                     <Button
-                        android:id="@+id/button"
+                        android:id="@+id/btnAnswer"
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
                         android:layout_below="@+id/textView4"
