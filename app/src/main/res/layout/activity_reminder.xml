@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/selectedTime"
         android:layout_marginTop="200dp"
-        android:text="08 : 45 PM"
+        android:text="00 : 00"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="46dp"/>

@@ -47,9 +47,11 @@ public class Reminder extends AppCompatActivity {
         binding.setAlarmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                setAlarm();
-
+                if (calendar != null) {
+                    setAlarm();
+                } else {
+                    Toast.makeText(Reminder.this, "Please select an alarm time", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -106,7 +108,7 @@ public class Reminder extends AppCompatActivity {
                 .setTitleText("Select Alarm Time")
                 .build();
 
-        picker.show(getSupportFragmentManager(),"foxandroid");
+        picker.show(getSupportFragmentManager(),"StudyFlow");
 
         picker.addOnPositiveButtonClickListener(new View.OnClickListener() {
             @Override
@@ -139,10 +141,10 @@ public class Reminder extends AppCompatActivity {
     private void createNotificationChannel() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            CharSequence name = "foxandroidReminderChannel";
-            String description = "Channel For Alarm Manager";
+            CharSequence name = "StudyFlowReminderChannel";
+            String description = "Streamlining your learning flow!";
             int importance = NotificationManager.IMPORTANCE_HIGH;
-            NotificationChannel channel = new NotificationChannel("foxandroid",name,importance);
+            NotificationChannel channel = new NotificationChannel("StudyFlow",name,importance);
             channel.setDescription(description);
 
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
