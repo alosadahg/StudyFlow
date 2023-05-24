@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbarStyle="insideOverlay"
+    tools:context=".Quizzes">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <include layout="@layout/activity_header"
+        android:id="@+id/header"/>
+
+    <TextView
+        android:id="@+id/txtQuizTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginHorizontal="20dp"
+        android:fontFamily="@font/poppins_bold"
+        android:gravity="center"
+        android:text="Information Management"
+        android:textColor="@color/main_color"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/total_question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_below="@+id/txtQuizTitle"
+        android:fontFamily="@font/poppins_bold"
+        android:text="Question 1/5"
+        android:textColor="#74A367"
+        android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/header"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginHorizontal="20dp"
+            android:fontFamily="@font/poppins_bold"
+            android:gravity="center"
+            android:text="Question"
+            android:textColor="@color/main_color"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/ans_A"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ans A"
+            android:layout_marginVertical="5dp"
+            android:layout_marginHorizontal="20dp"
+            android:textColor="@color/main_color"
+            android:backgroundTint="#E5EBFD" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ans_B"
+            android:text="Ans B"
+            android:layout_marginVertical="5dp"
+            android:layout_marginHorizontal="20dp"
+            android:textColor="@color/main_color"
+            android:backgroundTint="#E5EBFD"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ans_C"
+            android:text="Ans C"
+            android:layout_marginVertical="5dp"
+            android:layout_marginHorizontal="20dp"
+            android:textColor="@color/main_color"
+            android:backgroundTint="#E5EBFD"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ans_D"
+            android:text="Ans D"
+            android:layout_marginVertical="5dp"
+            android:layout_marginHorizontal="20dp"
+            android:textColor="@color/main_color"
+            android:backgroundTint="#E5EBFD"/>
+
+        <Button
+            android:id="@+id/submit_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="center"
+            android:layout_toRightOf="@id/imageView6"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Submit"
+            android:textSize="18sp"
+            app:backgroundTint="#5C8850"
+            app:cornerRadius="14dp" />
+    </LinearLayout>
+</ScrollView>
