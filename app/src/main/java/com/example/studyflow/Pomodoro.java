@@ -20,14 +20,14 @@ public class Pomodoro extends AppCompatActivity {
     private boolean isTimerRunning = false;
     private static final long POMODORO_TIME = 25 * 60 * 1000; // 25 minutes in milliseconds
     private static final long LONG_BREAK_TIME = 15 * 60 * 1000; // 15 minutes in milliseconds
-    private static final long SHORT_BREAK_TIME = 5 * 60 * 1000; // 5 minutes in milliseconds
-    private Button btnFocus, btnShortBreak, btnLongBreak;
+    private static final long SHORT_BREAK_TIME = 10 * 1000;
+//            5 * 60 * 1000; // 5 minutes in milliseconds
+
     private MaterialButtonToggleGroup toggleButton;
     private Button btnPomodoroStart;
     private int selectedButtonId;
     private CircularProgressIndicator circularProgressIndicator;
     private long timerDuration;
-    private long timeElapsed;
     int timerID = -1;
 
     @Override
@@ -45,9 +45,6 @@ public class Pomodoro extends AppCompatActivity {
         ImageView catTheme = findViewById(R.id.catTheme);
         ImageView ic_close = findViewById(R.id.ic_close);
 
-        btnFocus = findViewById(R.id.btnPomodoroFocus);
-        btnShortBreak = findViewById(R.id.btnPomodoroShortBreak);
-        btnLongBreak = findViewById(R.id.btnPomodoroLongBreak);
         btnPomodoroStart = findViewById(R.id.btnPomodoroStart);
         toggleButton = findViewById(R.id.toggleButton);
 
@@ -95,7 +92,7 @@ public class Pomodoro extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (isTimerRunning) {
-                    pauseTimer();
+                    stopTimer();
                 }
             }
         });
@@ -119,7 +116,6 @@ public class Pomodoro extends AppCompatActivity {
     }
 
     private void startPomodoroTimer() {
-        timeElapsed = 0;
         timerDuration = POMODORO_TIME;
         circularProgressIndicator.setProgress(0);
         timer = new CountDownTimer(timerDuration, 1000) {
@@ -136,6 +132,7 @@ public class Pomodoro extends AppCompatActivity {
                 // Perform any necessary actions here
                 stopTimer();
                 updateTimerText(POMODORO_TIME);
+                updateProgress(timerDuration);
             }
         };
         timerID = 1;
@@ -144,7 +141,6 @@ public class Pomodoro extends AppCompatActivity {
     }
 
     private void startLongBreakTimer() {
-        timeElapsed = 0;
         timerDuration = LONG_BREAK_TIME;
         circularProgressIndicator.setProgress(0);
 
@@ -162,6 +158,7 @@ public class Pomodoro extends AppCompatActivity {
                 // Perform any necessary actions here
                 stopTimer();
                 updateTimerText(LONG_BREAK_TIME);
+                updateProgress(timerDuration);
             }
         };
         timerID = 2;
@@ -170,7 +167,6 @@ public class Pomodoro extends AppCompatActivity {
     }
 
     private void startShortBreakTimer() {
-        timeElapsed = 0;
         timerDuration = SHORT_BREAK_TIME;
         circularProgressIndicator.setProgress(0);
         timer = new CountDownTimer(timerDuration, 1000) {
@@ -187,6 +183,7 @@ public class Pomodoro extends AppCompatActivity {
                 // Perform any necessary actions here
                 stopTimer();
                 updateTimerText(SHORT_BREAK_TIME);
+                updateProgress(timerDuration);
             }
         };
         timerID = 3;
@@ -216,11 +213,5 @@ public class Pomodoro extends AppCompatActivity {
         circularProgressIndicator.setProgressCompat(progress, true);
         circularProgressIndicator.setMax(maxProgress);
     }
-
-    private void pauseTimer() {
-        timer.cancel();
-        isTimerRunning = false;
-    }
-
 
 }

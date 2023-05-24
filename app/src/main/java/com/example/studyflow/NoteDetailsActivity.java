@@ -105,7 +105,6 @@ public class NoteDetailsActivity extends AppCompatActivity {
         userDocumentID = sharedPreferences.getString("userDocumentID", "");
         DocumentReference noteRef;
         if(isEditMode) {
-            System.out.println("DocumentID: " + docId + " userDocumentID: " + userDocumentID);
             noteRef = FirebaseFirestore.getInstance().collection("notes")
                     .document(userDocumentID).collection("myNotes").document(docId);
         } else {
