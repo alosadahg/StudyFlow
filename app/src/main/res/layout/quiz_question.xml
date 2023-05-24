@@ -10,8 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-    <include layout="@layout/activity_header"
-        android:id="@+id/header"/>
 
     <TextView
         android:id="@+id/txtQuizTitle"
@@ -20,6 +18,7 @@
         android:layout_below="@+id/header"
         android:layout_gravity="center_horizontal"
         android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="30dp"
         android:fontFamily="@font/poppins_bold"
         android:gravity="center"
         android:text="Information Management"
