@@ -18,6 +18,12 @@
             android:name=".CountdownTimer"
             android:exported="false" />
         <activity
+            android:name=".QuizMain"
+            android:exported="false" />
+        <activity
+            android:name=".Quizzes"
+            android:exported="false" />
+        <activity
             android:name=".Reminder"
             android:exported="false" />
         <activity
@@ -52,7 +58,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".User" />
 
         <receiver android:name=".AlarmReceiver" />
     </application>
