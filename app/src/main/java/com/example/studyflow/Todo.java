@@ -136,6 +136,10 @@ public class Todo extends AppCompatActivity implements OnDialogCloseListner {
                         Intent reminder = new Intent(getApplicationContext(),Reminder.class);
                         startActivity(reminder);
                         return true;
+                    case R.id.nav_countdownTimer:
+                        Intent timer = new Intent(getApplicationContext(), CountdownTimer.class);
+                        startActivity(timer);
+                        return true;
                     case R.id.nav_logout:
                         SharedPreferences sharedPreferences = getSharedPreferences("current_user", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();

@@ -86,10 +86,10 @@
                     <Button
                         android:id="@+id/btnAnswer"
                         android:layout_width="wrap_content"
-                        android:layout_height="50dp"
+                        android:layout_height="wrap_content"
                         android:layout_below="@+id/textView4"
                         android:layout_alignParentEnd="true"
-                        android:layout_marginLeft="70dp"
+                        android:layout_marginLeft="30dp"
                         android:layout_marginTop="25dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginBottom="10dp"

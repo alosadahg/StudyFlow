@@ -10,8 +10,10 @@
         android:id="@+id/tvTimer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="120dp"
         android:textSize="32sp"
         android:text="00:00:00"
+        android:textColor="@color/text_color"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"/>
 
